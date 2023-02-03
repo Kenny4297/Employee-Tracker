@@ -1,4 +1,3 @@
-
 USE employee_tracker;
 
 INSERT INTO department (name) VALUES ('Corparate'), ('FoH'), ('BoH');

@@ -13,10 +13,7 @@ const db = mysql.createConnection(
     console.log(`Connected to the classlist_db database.`)
 );
 
-const exit = () => {
-    prompt.ui.close();
-} 
-
+//The main menu function that the user is returned to after each selection
 const mainMenu = async () => {
     const choice = await inquirer.prompt([
         {
@@ -61,23 +58,25 @@ const mainMenu = async () => {
     }
 }
 
+//Fetches the roles from the respective table
 const getActiveRoles = async () => {
     let [col] = await db.promise().query('SELECT * FROM role');
     return col;
 }
 
+//Fetches the departments from the respective table
 const getActiveDepartments = async () => {
     let [col] = await db.promise().query('SELECT * FROM department');
     return col;
 }
 
+//Fetches the managers from the respective table
 const getActiveManagers = async () => {
     let [col] = await db.promise().query('SELECT first_name FROM employee WHERE role_id = 3');
     return col;
 }
 
 //==============Main functions=================
-// &COMPLETED
 const addDepartment = async () => {
     const answers = await inquirer.prompt([
         { name: 'department_name', message: 'Department Name: ' }
@@ -91,35 +90,36 @@ const addDepartment = async () => {
             console.log(result);
           }));
 
-    //Fix where it shows all departments, not just the department you selected
+    //Adds the new department to the table
     const [[createdDepartment]] = await db.promise().query('SELECT * FROM department WHERE name = ?', answers.department_name);
 
+    //Gets all the departments (plus the newest) and displays that to the user
     const [departments] = await db.promise().query('SELECT * FROM department');
 
     return console.table(departments);
 }
 
-// &COmpleted
 const viewAllDepartments = async () => {
     const [departments] = await db.promise().query('SELECT * FROM department');
 
     return console.table(departments);
 }
 
-
-//& COMPLETED
 const viewAllEmployees = async () => {
+    //A 3 way join that uses the foreign keys to display some information from each table
     let [employees] = await db.promise().query('SELECT employee.employee_id AS id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, manager.first_name AS manager FROM employee LEFT JOIN role on (employee.role_id = role.role_id) LEFT JOIN department on (role.department_id = department.id) LEFT JOIN employee AS manager on (employee.manager_id = manager.employee_id)')
 
     return console.table(employees);
-    }
+}
 
-
-//& COMPLETED
 const addEmployee = async () => {
+    //Getting the current roles
     const roles = await getActiveRoles();
+
+    //Getting the current managers
     const managers = await getActiveManagers(); 
 
+    //Creating a poor man's hashmap of the current available roles so the user can view the name of the role, but the application can use the id of the role to select the correct role.
     let map = roles.map (roles => {
         return ({
             name: roles.title,
@@ -127,6 +127,7 @@ const addEmployee = async () => {
         })
     })
 
+    //Creating a poor man's hashmap of the current available managers so the user can view the name of the manager, but the application can use the id of the manager to select the correct manager.
     let managerMap = managers.map (managers => {
         return ({
             name: managers.first_name,
@@ -173,12 +174,12 @@ const addEmployee = async () => {
             console.log(result);
             }));
     
+    //Simply displaying the updated 3 way join
     let [employees] = await db.promise().query('SELECT employee.employee_id AS id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, manager.first_name AS manager FROM employee LEFT JOIN role on (employee.role_id = role.role_id) LEFT JOIN department on (role.department_id = department.id) LEFT JOIN employee AS manager on (employee.manager_id = manager.employee_id)')
 
     return console.table(employees);
 };
 
-//& COMPLETE
 const addRole = async () => {
     let departments = await getActiveDepartments();
 
@@ -223,7 +224,6 @@ const addRole = async () => {
     return console.table(roles);
 }
 
-//& COMPLETE
 const updateEmployeeRole = async () => {
     const roles = await getActiveRoles();
     let map = roles.map (roles => {
@@ -255,7 +255,6 @@ const updateEmployeeRole = async () => {
     return console.table(employees);
 }
 
-//& COMPLETED
 const viewAllRoles = async () => {
     let [roles] = await db.promise().query('SELECT role.role_id, role.title, role.salary, department.name as department FROM role INNER JOIN department ON role.department_id = department.id;')
 

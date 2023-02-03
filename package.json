@@ -1,7 +1,7 @@
 {
   "name": "employeetracker",
   "version": "1.0.0",
-  "description": "",
+  "description": "* License Badge: [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)\r   * Link for license Badge: https://opensource.org/licenses/MIT",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,5 +12,13 @@
     "console.table": "^0.10.0",
     "inquirer": "^8.2.4",
     "mysql2": "^3.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kenny4297/Track-that-Employee.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Kenny4297/Track-that-Employee/issues"
+  },
+  "homepage": "https://github.com/Kenny4297/Track-that-Employee#readme"
 }

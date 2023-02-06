@@ -265,16 +265,4 @@ const addDepartment = async () => {
     return console.table(departments);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 init();

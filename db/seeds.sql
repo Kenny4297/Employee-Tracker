@@ -12,12 +12,3 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES
 ('Jaime', 'Johnson', 3, NULL), 
 ('Kenny', 'Cordero', 2, 1),
 ('Henry', 'Federer', 1, 1); 
-
-
-
-
-
-
-
-
-

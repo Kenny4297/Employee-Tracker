@@ -1,4 +1,4 @@
-  # Track that Employee!
+  # Employee Tracker
 
   ### Licenses
   * License Badge: [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
